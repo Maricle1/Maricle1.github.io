@@ -177,7 +177,7 @@
     
     <span class="post-meta mr-2">
       <i class="iconfont icon-chart"></i>
-      2.2k 字
+      2.1k 字
     </span>
   
 
@@ -187,7 +187,7 @@
       <i class="iconfont icon-clock-fill"></i>
       
       
-      30
+      28
        分钟
     </span>
   
@@ -235,45 +235,144 @@
 </ol>
 <h3 id="创建两个仓库：索引库和代码仓库"><a href="#创建两个仓库：索引库和代码仓库" class="headerlink" title="创建两个仓库：索引库和代码仓库"></a>创建两个仓库：索引库和代码仓库</h3><p>在github上创建索引库 <strong><a target="_blank" rel="noopener" href="https://github.com/MaricleZhang/ZJMaricleSpec">ZJMaricleSpec</a>**和代码库</strong><a target="_blank" rel="noopener" href="https://github.com/MaricleZhang/ZJMaricle">ZJMaricle</a>**</p>
 <h3 id="创建并设置本地私有Spec-Repo"><a href="#创建并设置本地私有Spec-Repo" class="headerlink" title="创建并设置本地私有Spec Repo"></a>创建并设置本地私有Spec Repo</h3><p>两个仓库创建完成后在Terminal中执行如下命令</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"> # pod repo add [Private Repo Name] [GitHub HTTPS clone URL]</span><br><span class="line">$ pod repo add ZJMaricleSpec https:&#x2F;&#x2F;github.com&#x2F;MaricleZhang&#x2F;ZJMaricleSpec.git</span><br></pre></td></tr></table></figure>
+<pre><code class="hljs awk"> <span class="hljs-comment"># pod repo add [Private Repo Name] [GitHub HTTPS clone URL]</span>
+$ pod repo add ZJMaricleSpec https:<span class="hljs-regexp">//gi</span>thub.com<span class="hljs-regexp">/MaricleZhang/</span>ZJMaricleSpec.git</code></pre>
 <p>需要特别注意的是这里的URL是Spec索引库的地址，如果写成代码库的地址就会出现</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[!] An unexpected version directory Assets was encountered for the &#x2F;Users&#x2F;zhangjian&#x2F;.cocoapods&#x2F;repos&#x2F;mariclezhang&#x2F;YTVestSDK Pod in the YTVestSDK repository.</span><br></pre></td></tr></table></figure>
+<pre><code class="hljs awk">[!] An unexpected version directory Assets was encountered <span class="hljs-keyword">for</span> the <span class="hljs-regexp">/Users/</span>zhangjian<span class="hljs-regexp">/.cocoapods/</span>repos<span class="hljs-regexp">/mariclezhang/</span>YTVestSDK Pod <span class="hljs-keyword">in</span> the YTVestSDK repository.</code></pre>
 <p>执行完成后</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ cd ~&#x2F;.cocoapods&#x2F;repos</span><br></pre></td></tr></table></figure>
+<pre><code class="hljs arcade">$ cd ~<span class="hljs-regexp">/.cocoapods/</span>repos</code></pre>
 <p>如果存在<code>ZJMaricleSpec</code>则说明本地<code>repo Spec</code> 创建成功</p>
 <h3 id="创建Pod所对应的podspec文件"><a href="#创建Pod所对应的podspec文件" class="headerlink" title="创建Pod所对应的podspec文件"></a>创建Pod所对应的podspec文件</h3><p>  cd 到要创建项目的目录然后执行</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ pod lib create ZJMaricle</span><br></pre></td></tr></table></figure>
+<pre><code class="hljs crystal">$ pod <span class="hljs-class"><span class="hljs-keyword">lib</span> <span class="hljs-title">create</span> <span class="hljs-title">ZJMaricle</span></span></code></pre>
 <p>然后会问一些问题</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">What language do you want to use?? [ Swift &#x2F; ObjC ]</span><br><span class="line"> &gt; Objc</span><br><span class="line">&#x2F;&#x2F;这里特别说明一下，最好带上demo方便我们以后的代码调试</span><br><span class="line">Would you like to include a demo application with your library? [ Yes &#x2F; No ]</span><br><span class="line"> &gt; Yes</span><br><span class="line"></span><br><span class="line">Which testing frameworks will you use? [ Specta &#x2F; Kiwi &#x2F; None ]</span><br><span class="line"> &gt; None</span><br><span class="line"></span><br><span class="line">Would you like to do view based testing? [ Yes &#x2F; No ]</span><br><span class="line"> &gt; Yes</span><br><span class="line"></span><br><span class="line">What is your class prefix?</span><br><span class="line"> &gt; ZJ</span><br></pre></td></tr></table></figure>
+<pre><code class="hljs sql">What language <span class="hljs-keyword">do</span> you want <span class="hljs-keyword">to</span> <span class="hljs-keyword">use</span>?? [ Swift / ObjC ]
+ &gt; Objc
+//这里特别说明一下，最好带上demo方便我们以后的代码调试
+Would you <span class="hljs-keyword">like</span> <span class="hljs-keyword">to</span> <span class="hljs-keyword">include</span> a demo application <span class="hljs-keyword">with</span> your <span class="hljs-keyword">library</span>? [ Yes / <span class="hljs-keyword">No</span> ]
+ &gt; Yes
+
+Which testing frameworks will you <span class="hljs-keyword">use</span>? [ Specta / Kiwi / <span class="hljs-keyword">None</span> ]
+ &gt; <span class="hljs-keyword">None</span>
+
+Would you <span class="hljs-keyword">like</span> <span class="hljs-keyword">to</span> <span class="hljs-keyword">do</span> <span class="hljs-keyword">view</span> based testing? [ Yes / <span class="hljs-keyword">No</span> ]
+ &gt; Yes
+
+What <span class="hljs-keyword">is</span> your <span class="hljs-keyword">class</span> prefix?
+ &gt; ZJ</code></pre>
 <p>问完这4个问题他会自动执行pod install命令创建项目并生成依赖。<br>下面是生成的文件目录及介绍</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">$ tree ZJMaricle -L 2</span><br><span class="line">ZJMaricle</span><br><span class="line">├── Example                                            #demo </span><br><span class="line">│   ├── Podfile                                        #demo 的依赖描述文件</span><br><span class="line">│   ├── Podfile.lock</span><br><span class="line">│   ├── Pods                                           #demo 的依赖文件</span><br><span class="line">│   ├── Tests                                           </span><br><span class="line">│   ├── ZJMaricle</span><br><span class="line">│   ├── ZJMaricle.xcodeproj</span><br><span class="line">│   └── ZJMaricle.xcworkspace</span><br><span class="line">├── LICENSE</span><br><span class="line">├── README.md</span><br><span class="line">├── ZJMaricle</span><br><span class="line">│   ├── Assets                                         #资源文件</span><br><span class="line">│   └── Classes                                        #类文件</span><br><span class="line">├── ZJMaricle.podspec                                  #podspec pod库的描述文件</span><br><span class="line">└── _Pods.xcodeproj -&gt; Example&#x2F;Pods&#x2F;Pods.xcodeproj</span><br><span class="line"></span><br><span class="line">10 directories, 5 files</span><br></pre></td></tr></table></figure>
+<pre><code class="hljs reasonml">$ tree ZJMaricle -L <span class="hljs-number">2</span>
+ZJMaricle
+├── Example                                            #demo 
+│   ├── Podfile                                        #demo 的依赖描述文件
+│   ├── <span class="hljs-module-access"><span class="hljs-module"><span class="hljs-identifier">Podfile</span>.</span></span>lock
+│   ├── Pods                                           #demo 的依赖文件
+│   ├── Tests                                           
+│   ├── ZJMaricle
+│   ├── <span class="hljs-module-access"><span class="hljs-module"><span class="hljs-identifier">ZJMaricle</span>.</span></span>xcodeproj
+│   └── <span class="hljs-module-access"><span class="hljs-module"><span class="hljs-identifier">ZJMaricle</span>.</span></span>xcworkspace
+├── LICENSE
+├── <span class="hljs-module-access"><span class="hljs-module"><span class="hljs-identifier">README</span>.</span></span>md
+├── ZJMaricle
+│   ├── Assets                                         #资源文件
+│   └── Classes                                        #类文件
+├── <span class="hljs-module-access"><span class="hljs-module"><span class="hljs-identifier">ZJMaricle</span>.</span></span>podspec                                  #podspec pod库的描述文件
+└── <span class="hljs-module-access"><span class="hljs-module"><span class="hljs-identifier">_Pods</span>.</span></span>xcodeproj -&gt; Example/Pods/<span class="hljs-module-access"><span class="hljs-module"><span class="hljs-identifier">Pods</span>.</span></span>xcodeproj
+
+<span class="hljs-number">10</span> directories, <span class="hljs-number">5</span> files</code></pre>
 <p>接下来把库文件添加到<code>ZJMaricle/Classes</code>文件夹下，终端进入<code>ZJMaricle/Example</code>下，执行<code>pod update</code>命令,完成后打开项目工程可以看到，刚刚添加的组件已经在Pods子工程下Development Pods/ZJMaricle中了。这里需要注意的是：每次向Pods 中添加文件或者podspec中的版本升级都要执行<code>pod update</code>命令。</p>
 <p>配置podspec文件</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br></pre></td><td class="code"><pre><span class="line">#</span><br><span class="line"># Be sure to run &#96;pod lib lint ZJMaricle.podspec&#39; to ensure this is a</span><br><span class="line"># valid spec before submitting.</span><br><span class="line">#</span><br><span class="line"># Any lines starting with a # are optional, but their use is encouraged</span><br><span class="line"># To learn more about a Podspec see http:&#x2F;&#x2F;guides.cocoapods.org&#x2F;syntax&#x2F;podspec.html</span><br><span class="line">#</span><br><span class="line"></span><br><span class="line">Pod::Spec.new do |s|</span><br><span class="line">  s.name             &#x3D; &#39;ZJMaricle&#39;                              #名称</span><br><span class="line">  s.version          &#x3D; &#39;0.1.0&#39;                                  #版本号</span><br><span class="line">  s.summary          &#x3D; &#39;description of ZJMaricle.&#39;              #库的描述</span><br><span class="line"></span><br><span class="line"># This description is used to generate tags and improve search results.</span><br><span class="line">#   * Think: What does it do? Why did you write it? What is the focus?</span><br><span class="line">#   * Try to keep it short, snappy and to the point.</span><br><span class="line">#   * Write the description between the DESC delimiters below.</span><br><span class="line">#   * Finally, don&#39;t worry about the indent, CocoaPods strips it!</span><br><span class="line"></span><br><span class="line">  s.description      &#x3D; &lt;&lt;-DESC</span><br><span class="line">TODO: Add long description of the pod here.</span><br><span class="line">                       DESC</span><br><span class="line"></span><br><span class="line">  s.homepage         &#x3D; &#39;https:&#x2F;&#x2F;github.com&#x2F;MaricleZhang&#x2F;ZJMaricle.git&#39; #主页,这里要填写可以访问到的地址，不然验证不通过</span><br><span class="line">  # s.screenshots     &#x3D; &#39;www.example.com&#x2F;screenshots_1&#39;, &#39;www.example.com&#x2F;screenshots_2&#39;</span><br><span class="line">  s.license          &#x3D; &#123; :type &#x3D;&gt; &#39;MIT&#39;, :file &#x3D;&gt; &#39;LICENSE&#39; &#125;</span><br><span class="line">  s.author           &#x3D; &#123; &#39;929006968@qq.com&#39; &#x3D;&gt; &#39;jian.zhang@yuntu-inc.com&#39; &#125;</span><br><span class="line">  s.source           &#x3D; &#123; :git &#x3D;&gt; &#39;https:&#x2F;&#x2F;github.com&#x2F;MaricleZhang&#x2F;ZJMaricle.git&#39;, :tag &#x3D;&gt; s.version.to_s &#125;  #项目地址，这里不支持ssh的地址，验证不通过，只支持HTTP和HTTPS，最好使用HTTPS</span><br><span class="line">  # s.social_media_url &#x3D; &#39;https:&#x2F;&#x2F;twitter.com&#x2F;&lt;TWITTER_USERNAME&gt;&#39;</span><br><span class="line"></span><br><span class="line">  s.ios.deployment_target &#x3D; &#39;8.0&#39;</span><br><span class="line"></span><br><span class="line">  s.source_files &#x3D; &#39;ZJMaricle&#x2F;Classes&#x2F;**&#x2F;*&#39;                        #库文件</span><br><span class="line">  </span><br><span class="line">  # s.resource_bundles &#x3D; &#123;                                         #库资源文件</span><br><span class="line">  #   &#39;ZJMaricle&#39; &#x3D;&gt; [&#39;ZJMaricle&#x2F;Assets&#x2F;*.png&#39;]</span><br><span class="line">  # &#125;</span><br><span class="line"></span><br><span class="line">  # s.public_header_files &#x3D; &#39;Pod&#x2F;Classes&#x2F;**&#x2F;*.h&#39;</span><br><span class="line">  # s.frameworks &#x3D; &#39;UIKit&#39;, &#39;MapKit&#39;</span><br><span class="line">  # s.dependency &#39;AFNetworking&#39;, &#39;~&gt; 2.3&#39;</span><br><span class="line">end</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<pre><code class="hljs ruby"><span class="hljs-comment">#</span>
+<span class="hljs-comment"># Be sure to run `pod lib lint ZJMaricle.podspec&#x27; to ensure this is a</span>
+<span class="hljs-comment"># valid spec before submitting.</span>
+<span class="hljs-comment">#</span>
+<span class="hljs-comment"># Any lines starting with a # are optional, but their use is encouraged</span>
+<span class="hljs-comment"># To learn more about a Podspec see http://guides.cocoapods.org/syntax/podspec.html</span>
+<span class="hljs-comment">#</span>
+
+Pod::Spec.new <span class="hljs-keyword">do</span> <span class="hljs-params">|s|</span>
+  s.name             = <span class="hljs-string">&#x27;ZJMaricle&#x27;</span>                              <span class="hljs-comment">#名称</span>
+  s.version          = <span class="hljs-string">&#x27;0.1.0&#x27;</span>                                  <span class="hljs-comment">#版本号</span>
+  s.summary          = <span class="hljs-string">&#x27;description of ZJMaricle.&#x27;</span>              <span class="hljs-comment">#库的描述</span>
+
+<span class="hljs-comment"># This description is used to generate tags and improve search results.</span>
+<span class="hljs-comment">#   * Think: What does it do? Why did you write it? What is the focus?</span>
+<span class="hljs-comment">#   * Try to keep it short, snappy and to the point.</span>
+<span class="hljs-comment">#   * Write the description between the DESC delimiters below.</span>
+<span class="hljs-comment">#   * Finally, don&#x27;t worry about the indent, CocoaPods strips it!</span>
+
+  s.description      = &lt;&lt;-DESC
+<span class="hljs-symbol">TODO:</span> Add long description of the pod here.
+                       DESC
+
+  s.homepage         = <span class="hljs-string">&#x27;https://github.com/MaricleZhang/ZJMaricle.git&#x27;</span> <span class="hljs-comment">#主页,这里要填写可以访问到的地址，不然验证不通过</span>
+  <span class="hljs-comment"># s.screenshots     = &#x27;www.example.com/screenshots_1&#x27;, &#x27;www.example.com/screenshots_2&#x27;</span>
+  s.license          = &#123; <span class="hljs-symbol">:type</span> =&gt; <span class="hljs-string">&#x27;MIT&#x27;</span>, <span class="hljs-symbol">:file</span> =&gt; <span class="hljs-string">&#x27;LICENSE&#x27;</span> &#125;
+  s.author           = &#123; <span class="hljs-string">&#x27;929006968@qq.com&#x27;</span> =&gt; <span class="hljs-string">&#x27;jian.zhang@yuntu-inc.com&#x27;</span> &#125;
+  s.source           = &#123; <span class="hljs-symbol">:git</span> =&gt; <span class="hljs-string">&#x27;https://github.com/MaricleZhang/ZJMaricle.git&#x27;</span>, <span class="hljs-symbol">:tag</span> =&gt; s.version.to_s &#125;  <span class="hljs-comment">#项目地址，这里不支持ssh的地址，验证不通过，只支持HTTP和HTTPS，最好使用HTTPS</span>
+  <span class="hljs-comment"># s.social_media_url = &#x27;https://twitter.com/&lt;TWITTER_USERNAME&gt;&#x27;</span>
+
+  s.ios.deployment_target = <span class="hljs-string">&#x27;8.0&#x27;</span>
+
+  s.source_files = <span class="hljs-string">&#x27;ZJMaricle/Classes/**/*&#x27;</span>                        <span class="hljs-comment">#库文件</span>
+  
+  <span class="hljs-comment"># s.resource_bundles = &#123;                                         #库资源文件</span>
+  <span class="hljs-comment">#   &#x27;ZJMaricle&#x27; =&gt; [&#x27;ZJMaricle/Assets/*.png&#x27;]</span>
+  <span class="hljs-comment"># &#125;</span>
+
+  <span class="hljs-comment"># s.public_header_files = &#x27;Pod/Classes/**/*.h&#x27;</span>
+  <span class="hljs-comment"># s.frameworks = &#x27;UIKit&#x27;, &#x27;MapKit&#x27;</span>
+  <span class="hljs-comment"># s.dependency &#x27;AFNetworking&#x27;, &#x27;~&gt; 2.3&#x27;</span>
+<span class="hljs-keyword">end</span>
+</code></pre>
 <h3 id="本地测试配置好的podspec文件。"><a href="#本地测试配置好的podspec文件。" class="headerlink" title="本地测试配置好的podspec文件。"></a>本地测试配置好的podspec文件。</h3><p>编辑<code>.podspec</code>完成后本地校验是否合格，这里有必要解释一下<code>pod lib lint</code>校验本地<code>.podspec</code>文件和pod库中的文件的合法性，如果不合法，则需要修改再校验，直到校验通过。如果有警告则需要使用<code>pod lib lint --allow-warnings</code>命令通过校验。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ pod lib lint</span><br></pre></td></tr></table></figure>
+<pre><code class="hljs crystal">$ pod <span class="hljs-class"><span class="hljs-keyword">lib</span> <span class="hljs-title">lint</span></span></code></pre>
 <p>当出现下面情况时说明本地校验成功</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"> -&gt; ZJMaricle (0.1.0)</span><br><span class="line"></span><br><span class="line">ZJMaricle passed validation.</span><br></pre></td></tr></table></figure>
+<pre><code class="hljs angelscript"> -&gt; ZJMaricle (<span class="hljs-number">0.1</span><span class="hljs-number">.0</span>)
+
+ZJMaricle passed validation.</code></pre>
 <p>提交代码，我这里使用的<code>sourcetree</code>,本地代码库与远程库建立连接，这里就不在赘述了。并且给远程仓库打上tag，需要注意的是这里的tag就是创建私有库的版本号，需与 <code>.podspec</code>文件中的版本号保持一致。重要的事情说三遍：本地校验成功后在打tag，本地校验成功后在打tag，本地校验成功后在打tag。<br><img src="http://upload-images.jianshu.io/upload_images/2403444-e403c2147ebdea0f.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" srcset="/img/loading.gif" alt="给GitHub仓库打上tag.png"></p>
 <h3 id="向私有的Spec-Repo中提交podspec"><a href="#向私有的Spec-Repo中提交podspec" class="headerlink" title="向私有的Spec Repo中提交podspec"></a>向私有的Spec Repo中提交podspec</h3><p>确认本地校验成功，并且打上tag后，终端进入到<code>ZJMaricle.podspec</code>同一目录下执行</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ pod repo push ZJMaricleSpec ZJMaricle.podspec  #前面是本地Repo名字 后面是podspec名字</span><br></pre></td></tr></table></figure>
+<pre><code class="hljs avrasm">$ pod repo <span class="hljs-keyword">push</span> ZJMaricleSpec ZJMaricle.podspec  <span class="hljs-meta">#前面是本地Repo名字 后面是podspec名字</span></code></pre>
 <p>出现</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">$ pod repo push ZJMaricleSpec ZJMaricle.podspec</span><br><span class="line"></span><br><span class="line">Validating spec</span><br><span class="line"> -&gt; ZJMaricle (0.1.0)</span><br><span class="line"></span><br><span class="line">Updating the &#96;ZJMaricleSpec&#39; repo</span><br><span class="line"></span><br><span class="line">Your configuration specifies to merge with the ref &#39;refs&#x2F;heads&#x2F;master&#39;</span><br><span class="line">from the remote, but no such ref was fetched.</span><br><span class="line"></span><br><span class="line">Adding the spec to the &#96;ZJMaricleSpec&#39; repo</span><br><span class="line"></span><br><span class="line"> - [Add] ZJMaricle (0.1.0)</span><br><span class="line"></span><br><span class="line">Pushing the &#96;ZJMaricleSpec&#39; repo</span><br></pre></td></tr></table></figure>
+<pre><code class="hljs ocaml">$ pod repo push <span class="hljs-type">ZJMaricleSpec</span> <span class="hljs-type">ZJMaricle</span>.podspec
+
+<span class="hljs-type">Validating</span> spec
+ -&gt; <span class="hljs-type">ZJMaricle</span> (<span class="hljs-number">0.1</span>.<span class="hljs-number">0</span>)
+
+<span class="hljs-type">Updating</span> the <span class="hljs-type">`ZJMaricleSpec&#x27;</span> repo
+
+<span class="hljs-type">Your</span> configuration specifies <span class="hljs-keyword">to</span> merge <span class="hljs-keyword">with</span> the <span class="hljs-built_in">ref</span> <span class="hljs-symbol">&#x27;refs</span>/heads/master&#x27;
+from the remote, but no such <span class="hljs-built_in">ref</span> was fetched.
+
+<span class="hljs-type">Adding</span> the spec <span class="hljs-keyword">to</span> the <span class="hljs-type">`ZJMaricleSpec&#x27;</span> repo
+
+ - [<span class="hljs-type">Add</span>] <span class="hljs-type">ZJMaricle</span> (<span class="hljs-number">0.1</span>.<span class="hljs-number">0</span>)
+
+<span class="hljs-type">Pushing</span> the <span class="hljs-type">`ZJMaricleSpec&#x27;</span> repo</code></pre>
 <p>到索引库Spec Repo远端仓库，会发现有了一次提交，说明podspec已经push上去了，并且索引库已经与代码库建立了有效连接。再到本地的Sepc repo中</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ cd ~&#x2F;.cocoapods&#x2F;repos&#x2F;ZJMaricleSpec</span><br></pre></td></tr></table></figure>
+<pre><code class="hljs arcade">$ cd ~<span class="hljs-regexp">/.cocoapods/</span>repos/ZJMaricleSpec</code></pre>
 <p>会发现目录结构变成</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">ZJMaricle</span><br><span class="line">└── 0.1.0</span><br><span class="line">    └── ZJMaricle.podspec</span><br></pre></td></tr></table></figure>
+<pre><code class="hljs css"><span class="hljs-selector-tag">ZJMaricle</span>
+└── 0<span class="hljs-selector-class">.1</span><span class="hljs-selector-class">.0</span>
+    └── <span class="hljs-selector-tag">ZJMaricle</span><span class="hljs-selector-class">.podspec</span></code></pre>
 <p>到这里pod私有库的创建已经完成，怎么样检验我的pod私有库有没有建立成功呢。执行<code>pod search ZJMaricle</code>出现说明创建成功。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">-&gt; ZJMaricle (0.1.0)</span><br><span class="line">   description of ZJMaricle.</span><br><span class="line">   pod &#39;ZJMaricle&#39;, &#39;~&gt; 0.1.0&#39;</span><br><span class="line">   - Homepage: https:&#x2F;&#x2F;github.com&#x2F;MaricleZhang&#x2F;ZJMaricle.git</span><br><span class="line">   - Source:   https:&#x2F;&#x2F;github.com&#x2F;MaricleZhang&#x2F;ZJMaricle.git</span><br><span class="line">   - Versions: 0.1.0 [ZJMaricleSpec repo]</span><br><span class="line">(END)</span><br></pre></td></tr></table></figure>
+<pre><code class="hljs awk">-&gt; ZJMaricle (<span class="hljs-number">0.1</span>.<span class="hljs-number">0</span>)
+   description of ZJMaricle.
+   pod <span class="hljs-string">&#x27;ZJMaricle&#x27;</span>, <span class="hljs-string">&#x27;~&gt; 0.1.0&#x27;</span>
+   - Homepage: https:<span class="hljs-regexp">//gi</span>thub.com<span class="hljs-regexp">/MaricleZhang/</span>ZJMaricle.git
+   - Source:   https:<span class="hljs-regexp">//gi</span>thub.com<span class="hljs-regexp">/MaricleZhang/</span>ZJMaricle.git
+   - Versions: <span class="hljs-number">0.1</span>.<span class="hljs-number">0</span> [ZJMaricleSpec repo]
+(<span class="hljs-keyword">END</span>)</code></pre>
 <p>这里讨论的是pod私有库，如果建立共有库的话，请使用 <code>trunk</code>工具,详细请参考<a target="_blank" rel="noopener" href="http://guides.cocoapods.org/making/getting-setup-with-trunk.html">官方文档</a>。</p>
 <h2 id="Pod-私有库的使用"><a href="#Pod-私有库的使用" class="headerlink" title="Pod 私有库的使用"></a>Pod 私有库的使用</h2><h3 id="1-私有库的引用"><a href="#1-私有库的引用" class="headerlink" title="1. 私有库的引用"></a>1. 私有库的引用</h3><p>当我们在Example下执行<code>pod install</code> 的时候会出现<code>[!] Unable to find a specification for ZJMaricle </code>,Cocoapods并不能找到对应的私有库。这是因为默认情况下会在公有库<a target="_blank" rel="noopener" href="https://github.com/CocoaPods/Specs.git">https://github.com/CocoaPods/Specs.git</a> 中查询，我们的私有库并不在这里，所以当然查询不到。下面是解决的办法，在podfile的顶部添加</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">source &#39;https:&#x2F;&#x2F;github.com&#x2F;CocoaPods&#x2F;Specs.git&#39;  #官方仓库的地址</span><br><span class="line">source &#39;https:&#x2F;&#x2F;github.com&#x2F;MaricleZhang&#x2F;ZJMaricleSpec.git&#39;  #我们自己的私有spec仓库的地址</span><br></pre></td></tr></table></figure>
+<pre><code class="hljs bash"><span class="hljs-built_in">source</span> <span class="hljs-string">&#x27;https://github.com/CocoaPods/Specs.git&#x27;</span>  <span class="hljs-comment">#官方仓库的地址</span>
+<span class="hljs-built_in">source</span> <span class="hljs-string">&#x27;https://github.com/MaricleZhang/ZJMaricleSpec.git&#x27;</span>  <span class="hljs-comment">#我们自己的私有spec仓库的地址</span></code></pre>
 <p>这里添加的一定为Spec库的地址，如果写成代码库则会出现</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[!] An unexpected version directory Assets was encountered for the &#x2F;Users&#x2F;.cocoapods&#x2F;repos&#x2F;mariclezhang&#x2F;ZJMaricleSpec Pod in the ZJMaricleSpec repository.</span><br></pre></td></tr></table></figure>
+<pre><code class="hljs awk">[!] An unexpected version directory Assets was encountered <span class="hljs-keyword">for</span> the <span class="hljs-regexp">/Users/</span>.cocoapods<span class="hljs-regexp">/repos/m</span>ariclezhang/ZJMaricleSpec Pod <span class="hljs-keyword">in</span> the ZJMaricleSpec repository.</code></pre>
 <h2 id="2-Pod库的校验"><a href="#2-Pod库的校验" class="headerlink" title="2.Pod库的校验"></a>2.Pod库的校验</h2><h4 id="pod-lib-lint-和-pod-spec-lint-命令的区别"><a href="#pod-lib-lint-和-pod-spec-lint-命令的区别" class="headerlink" title="pod lib lint 和 pod spec lint 命令的区别"></a>pod lib lint 和 pod spec lint 命令的区别</h4><p><code> pod lib lint</code>是只从本地验证你的pod能否通过验证<br> <code>pod spec lint</code>是从本地和远程验证你的pod能否通过验证<br>在提交代码之前打tag之前，使用pod lib lint 验证一般不会出现问题，如果出现问题需要验证远程的代码则使用<code>pod spec lint</code>来验证。<br>本地校验<code>pod lib lint</code>如果出现</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[!] ZJMaricle did not pass validation, due to 1 warning (but you can use &#96;--allow-warnings&#96; to ignore it).</span><br></pre></td></tr></table></figure>
+<pre><code class="hljs routeros">[!] ZJMaricle did <span class="hljs-keyword">not</span> pass validation, due <span class="hljs-keyword">to</span> 1 <span class="hljs-builtin-name">warning</span> (but you can use `--allow-warnings` <span class="hljs-keyword">to</span> ignore it).</code></pre>
 <p>在代码中警告无法清除时，在提提交代码时使用</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pod repo push ZJMaricle ZJMaricleSpec.podspec --allow-warnings</span><br></pre></td></tr></table></figure>
+<pre><code class="hljs maxima">pod repo <span class="hljs-built_in">push</span> ZJMaricle ZJMaricleSpec.podspec --allow-<span class="hljs-built_in">warnings</span></code></pre>
 <p>参考文档：<br><a target="_blank" rel="noopener" href="http://blog.wtlucky.com/blog/2015/02/26/create-private-podspec/">使用Cocoapods创建私有podspec</a><br><a target="_blank" rel="noopener" href="http://www.jianshu.com/p/1e5927eeb341">Cocoapods使用私有库中遇到的坑</a><br><a target="_blank" rel="noopener" href="http://www.cocoachina.com/ios/20150930/13471.html">Cocoapods 应用第二部分-私有库相关</a></p>
 
             </div>

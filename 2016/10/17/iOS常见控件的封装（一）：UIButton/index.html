@@ -177,7 +177,7 @@
     
     <span class="post-meta mr-2">
       <i class="iconfont icon-chart"></i>
-      435 字
+      421 字
     </span>
   
 
@@ -228,11 +228,89 @@
 <ul>
 <li>UIButton+Block.h</li>
 </ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"> #import &lt;UIKit&#x2F;UIKit.h&gt;</span><br><span class="line">typedef void(^tapActionBlock)(UIButton *button);</span><br><span class="line"></span><br><span class="line">@interface UIButton (Block)</span><br><span class="line">@property(nonatomic,copy)tapActionBlock actionBlock;</span><br><span class="line"></span><br><span class="line">&#x2F;**</span><br><span class="line"> 通过block对button的点击事件封装</span><br><span class="line"> </span><br><span class="line"> @param frame       frame</span><br><span class="line"> @param title       标题</span><br><span class="line"> @param bgImageName 背景图片</span><br><span class="line"> @param actionBlock 点击事件回调block</span><br><span class="line"> </span><br><span class="line"> @return button</span><br><span class="line"> *&#x2F;</span><br><span class="line">+ (UIButton *)createBtnFrame:(CGRect)frame title:(NSString *)title bgImageName:(NSString *)bgImageName action:(tapActionBlock)actionBlock;</span><br><span class="line"></span><br><span class="line">@end</span><br></pre></td></tr></table></figure>
+<pre><code class="hljs objectivec"> <span class="hljs-meta">#import <span class="hljs-meta-string">&lt;UIKit/UIKit.h&gt;</span></span>
+<span class="hljs-keyword">typedef</span> <span class="hljs-keyword">void</span>(^tapActionBlock)(<span class="hljs-built_in">UIButton</span> *button);
+
+<span class="hljs-class"><span class="hljs-keyword">@interface</span> <span class="hljs-title">UIButton</span> (<span class="hljs-title">Block</span>)</span>
+<span class="hljs-keyword">@property</span>(<span class="hljs-keyword">nonatomic</span>,<span class="hljs-keyword">copy</span>)tapActionBlock actionBlock;
+
+<span class="hljs-comment">/**</span>
+<span class="hljs-comment"> 通过block对button的点击事件封装</span>
+<span class="hljs-comment"> </span>
+<span class="hljs-comment"> @param frame       frame</span>
+<span class="hljs-comment"> @param title       标题</span>
+<span class="hljs-comment"> @param bgImageName 背景图片</span>
+<span class="hljs-comment"> @param actionBlock 点击事件回调block</span>
+<span class="hljs-comment"> </span>
+<span class="hljs-comment"> @return button</span>
+<span class="hljs-comment"> */</span>
++ (<span class="hljs-built_in">UIButton</span> *)createBtnFrame:(<span class="hljs-built_in">CGRect</span>)frame title:(<span class="hljs-built_in">NSString</span> *)title bgImageName:(<span class="hljs-built_in">NSString</span> *)bgImageName action:(tapActionBlock)actionBlock;
+
+<span class="hljs-keyword">@end</span></code></pre>
 <ul>
 <li>UIButton+Block.m</li>
 </ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br></pre></td><td class="code"><pre><span class="line">#import &quot;UIButton+Block.h&quot;</span><br><span class="line">#import &lt;objc&#x2F;runtime.h&gt;</span><br><span class="line"></span><br><span class="line">@implementation UIButton (Block)</span><br><span class="line">static NSString *keyOfUseCategoryMethod;&#x2F;&#x2F;用分类方法创建的button，关联对象的key</span><br><span class="line">static NSString *keyOfBlock;</span><br><span class="line"></span><br><span class="line">+ (UIButton *)createBtnFrame:(CGRect)frame title:(NSString *)title bgImageName:(NSString *)bgImageName action:(tapActionBlock)actionBlock</span><br><span class="line">&#123;</span><br><span class="line">    </span><br><span class="line">    UIButton *button &#x3D; [UIButton buttonWithType:UIButtonTypeRoundedRect];</span><br><span class="line">    button.frame &#x3D; frame;</span><br><span class="line">    [button setTitle:title forState:UIControlStateNormal];</span><br><span class="line">    [button setBackgroundImage:[UIImage imageNamed:bgImageName] forState:UIControlStateNormal];</span><br><span class="line">    [button addTarget:button action:@selector(tapAction:) forControlEvents:UIControlEventTouchUpInside];</span><br><span class="line">    </span><br><span class="line">    &#x2F;**</span><br><span class="line">     *用runtime中的函数通过key关联对象</span><br><span class="line">     *</span><br><span class="line">     *objc_setAssociatedObject(id object, const void *key, id value, objc_AssociationPolicy policy)</span><br><span class="line">     *id object                     表示关联者，是一个对象，变量名理所当然也是object</span><br><span class="line">     *const void *key               获取被关联者的索引key</span><br><span class="line">     *id value                      被关联者，这里是一个block</span><br><span class="line">     *objc_AssociationPolicy policy 关联时采用的协议，有assign，retain，copy等协议，一般使用OBJC_ASSOCIATION_RETAIN_NONATOMIC</span><br><span class="line">     </span><br><span class="line">     *&#x2F;</span><br><span class="line">    objc_setAssociatedObject (button , &amp;keyOfUseCategoryMethod , actionBlock, OBJC_ASSOCIATION_COPY_NONATOMIC );</span><br><span class="line">    </span><br><span class="line">    return button;</span><br><span class="line">&#125;</span><br><span class="line">- (void)tapAction:(UIButton*)sender</span><br><span class="line">&#123;</span><br><span class="line">    &#x2F;**</span><br><span class="line">     * 通过key获取被关联对象</span><br><span class="line">     *objc_getAssociatedObject(id object, const void *key)</span><br><span class="line">     *</span><br><span class="line">     *&#x2F;</span><br><span class="line">    tapActionBlock block &#x3D; ( tapActionBlock )objc_getAssociatedObject (sender , &amp;keyOfUseCategoryMethod );</span><br><span class="line">    </span><br><span class="line">    if (block) &#123;</span><br><span class="line">        </span><br><span class="line">        block(sender);</span><br><span class="line">        </span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">- (void)setActionBlock:(tapActionBlock)actionBlock</span><br><span class="line">&#123;</span><br><span class="line">    objc_setAssociatedObject (self , &amp;keyOfBlock , actionBlock, OBJC_ASSOCIATION_COPY_NONATOMIC );</span><br><span class="line">    </span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">- (tapActionBlock)actionBlock</span><br><span class="line">&#123;</span><br><span class="line">    return objc_getAssociatedObject (self , &amp;keyOfBlock );</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">@end</span><br></pre></td></tr></table></figure>
+<pre><code class="hljs objectivec"><span class="hljs-meta">#import <span class="hljs-meta-string">&quot;UIButton+Block.h&quot;</span></span>
+<span class="hljs-meta">#import <span class="hljs-meta-string">&lt;objc/runtime.h&gt;</span></span>
+
+<span class="hljs-class"><span class="hljs-keyword">@implementation</span> <span class="hljs-title">UIButton</span> (<span class="hljs-title">Block</span>)</span>
+<span class="hljs-keyword">static</span> <span class="hljs-built_in">NSString</span> *keyOfUseCategoryMethod;<span class="hljs-comment">//用分类方法创建的button，关联对象的key</span>
+<span class="hljs-keyword">static</span> <span class="hljs-built_in">NSString</span> *keyOfBlock;
+
++ (<span class="hljs-built_in">UIButton</span> *)createBtnFrame:(<span class="hljs-built_in">CGRect</span>)frame title:(<span class="hljs-built_in">NSString</span> *)title bgImageName:(<span class="hljs-built_in">NSString</span> *)bgImageName action:(tapActionBlock)actionBlock
+&#123;
+    
+    <span class="hljs-built_in">UIButton</span> *button = [<span class="hljs-built_in">UIButton</span> buttonWithType:<span class="hljs-built_in">UIButtonTypeRoundedRect</span>];
+    button.frame = frame;
+    [button setTitle:title forState:<span class="hljs-built_in">UIControlStateNormal</span>];
+    [button setBackgroundImage:[<span class="hljs-built_in">UIImage</span> imageNamed:bgImageName] forState:<span class="hljs-built_in">UIControlStateNormal</span>];
+    [button addTarget:button action:<span class="hljs-keyword">@selector</span>(tapAction:) forControlEvents:<span class="hljs-built_in">UIControlEventTouchUpInside</span>];
+    
+    <span class="hljs-comment">/**</span>
+<span class="hljs-comment">     *用runtime中的函数通过key关联对象</span>
+<span class="hljs-comment">     *</span>
+<span class="hljs-comment">     *objc_setAssociatedObject(id object, const void *key, id value, objc_AssociationPolicy policy)</span>
+<span class="hljs-comment">     *id object                     表示关联者，是一个对象，变量名理所当然也是object</span>
+<span class="hljs-comment">     *const void *key               获取被关联者的索引key</span>
+<span class="hljs-comment">     *id value                      被关联者，这里是一个block</span>
+<span class="hljs-comment">     *objc_AssociationPolicy policy 关联时采用的协议，有assign，retain，copy等协议，一般使用OBJC_ASSOCIATION_RETAIN_NONATOMIC</span>
+<span class="hljs-comment">     </span>
+<span class="hljs-comment">     */</span>
+    objc_setAssociatedObject (button , &amp;keyOfUseCategoryMethod , actionBlock, OBJC_ASSOCIATION_COPY_NONATOMIC );
+    
+    <span class="hljs-keyword">return</span> button;
+&#125;
+- (<span class="hljs-keyword">void</span>)tapAction:(<span class="hljs-built_in">UIButton</span>*)sender
+&#123;
+    <span class="hljs-comment">/**</span>
+<span class="hljs-comment">     * 通过key获取被关联对象</span>
+<span class="hljs-comment">     *objc_getAssociatedObject(id object, const void *key)</span>
+<span class="hljs-comment">     *</span>
+<span class="hljs-comment">     */</span>
+    tapActionBlock block = ( tapActionBlock )objc_getAssociatedObject (sender , &amp;keyOfUseCategoryMethod );
+    
+    <span class="hljs-keyword">if</span> (block) &#123;
+        
+        block(sender);
+        
+    &#125;
+&#125;
+
+
+
+- (<span class="hljs-keyword">void</span>)setActionBlock:(tapActionBlock)actionBlock
+&#123;
+    objc_setAssociatedObject (<span class="hljs-keyword">self</span> , &amp;keyOfBlock , actionBlock, OBJC_ASSOCIATION_COPY_NONATOMIC );
+    
+&#125;
+
+- (tapActionBlock)actionBlock
+&#123;
+    <span class="hljs-keyword">return</span> objc_getAssociatedObject (<span class="hljs-keyword">self</span> , &amp;keyOfBlock );
+&#125;
+
+
+<span class="hljs-keyword">@end</span></code></pre>
 
 <p>这个封装的主要难点在于用runtime关联block，代码注释中有详细的解释，不足之处希望大家指正。想要了解更多或者下载demo,请访问github:<a target="_blank" rel="noopener" href="https://github.com/Maricle1/ControlsPackage.git">https://github.com/Maricle1/ControlsPackage.git</a></p>
 

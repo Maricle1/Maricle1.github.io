@@ -177,7 +177,7 @@
     
     <span class="post-meta mr-2">
       <i class="iconfont icon-chart"></i>
-      771 字
+      763 字
     </span>
   
 
@@ -225,7 +225,7 @@
 </blockquote>
 <a id="more"></a>
 <h3 id="消息发送"><a href="#消息发送" class="headerlink" title="消息发送"></a>消息发送</h3><p>给一个对象发送一条消息：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[obj messageName:parameter] -&gt; objc_msgSend(obj,SEL, parameter)</span><br></pre></td></tr></table></figure>
+<pre><code class="hljs reasonml"><span class="hljs-literal">[<span class="hljs-identifier">obj</span> <span class="hljs-identifier">messageName</span>:<span class="hljs-identifier">parameter</span>]</span> -&gt; objc<span class="hljs-constructor">_msgSend(<span class="hljs-params">obj</span>,SEL, <span class="hljs-params">parameter</span>)</span></code></pre>
 
 <ol>
 <li>通过 NSObject 的 isa 指针找到对应的 Class</li>
@@ -237,20 +237,31 @@
 <p>在上述流程中如果不能找对对应的 selector 时，这时候就会进入消息转发机制。消息转发机制可分为两个阶段，在这两个阶段中，有 3 次机会来处理之前未能处理 selector，越往后所花费的代价将越大，处理的灵活程度也就越高。如下图所示：</p>
 <p><img src="https://upload-images.jianshu.io/upload_images/2403444-746884faa399cef7.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" srcset="/img/loading.gif" alt="messageforward.png"></p>
 <h3 id="动态特性：方法解析和消息转发"><a href="#动态特性：方法解析和消息转发" class="headerlink" title="动态特性：方法解析和消息转发"></a>动态特性：方法解析和消息转发</h3><h4 id="动态方法解析阶段"><a href="#动态方法解析阶段" class="headerlink" title="动态方法解析阶段"></a>动态方法解析阶段</h4><p>在该阶段中，可以动态的为类添加一个方法，从而让动态添加的方法来处理之前未能处理的消息。可重写类以下方法：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">+ (BOOL)resolveInstanceMethod:(SEL)sel</span><br></pre></td></tr></table></figure>
+<pre><code class="hljs css">+ (<span class="hljs-selector-tag">BOOL</span>)<span class="hljs-selector-tag">resolveInstanceMethod</span><span class="hljs-selector-pseudo">:(SEL)sel</span></code></pre>
 <p>如果是类的静态方法，可重写以下方法：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">+ (BOOL)resolveClassMethod:(SEL)sel</span><br></pre></td></tr></table></figure>
+<pre><code class="hljs gcode">+ <span class="hljs-comment">(BOOL)</span>resolveClassMethod:<span class="hljs-comment">(SEL)</span>sel</code></pre>
 
 <p>SEL 就是未能处理的 selector，返回值为 BOOL 表示是否增加了新的方法来处理该 selector</p>
 <h4 id="备援接收阶段"><a href="#备援接收阶段" class="headerlink" title="备援接收阶段"></a>备援接收阶段</h4><p>在该阶段中我们可以将未知的 selector 转发给其他对象来处理。运行时提供两次机会，来做消息的转发，第一次是重写以下方法：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">- (id)forwardingTargetForSelector:(SEL)aSelector</span><br></pre></td></tr></table></figure>
+<pre><code class="hljs erlang">- <span class="hljs-params">(id)</span>forwardingTargetForSelector:<span class="hljs-params">(SEL)</span>aSelector</code></pre>
 <h4 id="完整消息转发"><a href="#完整消息转发" class="headerlink" title="完整消息转发"></a>完整消息转发</h4><p>如果不重写该方法，运行时将把方法调用的所有细节封装到 NSInvocation 对象中，进入完整的消息转发机制中，运行时将继续调用一下方法来进行消息的派发：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">- (NSMethodSignature *)methodSignatureForSelector:(SEL)aSelector</span><br><span class="line">- (void)forwardInvocation:(NSInvocation *)anInvocation</span><br></pre></td></tr></table></figure>
+<pre><code class="hljs erlang">- <span class="hljs-params">(NSMethodSignature *)</span>methodSignatureForSelector:<span class="hljs-params">(SEL)</span>aSelector
+- <span class="hljs-params">(void)</span>forwardInvocation:<span class="hljs-params">(NSInvocation *)</span>anInvocation</code></pre>
 
 <p>方法中的 NSInvocation 参数，包含了所有方法调用的细节，包括 selector/target/参数 等，重写该方法后我们可以将 anInvocation 转发给多个对象来处理该消息。在该阶段我们可以用来实现 “多重继承” 或者多重代理等。</p>
 <p>如果在两个阶段都不做任何处理的话，运行时将会把 selector 交由 doesNotRecognizeSelector 方法来处理，从而抛出异常导致 Crash </p>
 <h3 id="应用"><a href="#应用" class="headerlink" title="应用"></a>应用</h3><h4 id="崩溃的规避"><a href="#崩溃的规避" class="headerlink" title="崩溃的规避"></a>崩溃的规避</h4><p>创建 <code>NSObject+CashHandle</code>的分</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">- (NSMethodSignature *)methodSignatureForSelector:(SEL)aSelector</span><br><span class="line">&#123;</span><br><span class="line">    &#x2F;&#x2F;方法签名</span><br><span class="line">    return [NSMethodSignature signatureWithObjCTypes:&quot;v@:@&quot;];</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">- (void)forwardInvocation:(NSInvocation *)anInvocation</span><br><span class="line">&#123;</span><br><span class="line">    NSLog(@&quot;NSObject+CrashLogHandle---在类:%@中 未实现该方法:%@&quot;,NSStringFromClass([anInvocation.target class]),NSStringFromSelector(anInvocation.selector));</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<pre><code class="hljs objectivec">- (<span class="hljs-built_in">NSMethodSignature</span> *)methodSignatureForSelector:(SEL)aSelector
+&#123;
+    <span class="hljs-comment">//方法签名</span>
+    <span class="hljs-keyword">return</span> [<span class="hljs-built_in">NSMethodSignature</span> signatureWithObjCTypes:<span class="hljs-string">&quot;v@:@&quot;</span>];
+&#125;
+
+- (<span class="hljs-keyword">void</span>)forwardInvocation:(<span class="hljs-built_in">NSInvocation</span> *)anInvocation
+&#123;
+    <span class="hljs-built_in">NSLog</span>(<span class="hljs-string">@&quot;NSObject+CrashLogHandle---在类:%@中 未实现该方法:%@&quot;</span>,<span class="hljs-built_in">NSStringFromClass</span>([anInvocation.target <span class="hljs-keyword">class</span>]),<span class="hljs-built_in">NSStringFromSelector</span>(anInvocation.selector));
+&#125;
+</code></pre>
 <p><a target="_blank" rel="noopener" href="https://github.com/MaricleZhang/MessageForwardingDemo.git">Demo</a></p>
 
             </div>
