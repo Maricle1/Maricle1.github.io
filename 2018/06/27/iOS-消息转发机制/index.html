@@ -235,7 +235,7 @@
 <li>如果还是没找到就要开始进入动态方法解析和消息转发</li>
 </ol>
 <p>在上述流程中如果不能找对对应的 selector 时，这时候就会进入消息转发机制。消息转发机制可分为两个阶段，在这两个阶段中，有 3 次机会来处理之前未能处理 selector，越往后所花费的代价将越大，处理的灵活程度也就越高。如下图所示：</p>
-<p><img src="https://upload-images.jianshu.io/upload_images/2403444-746884faa399cef7.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" srcset="/img/loading.gif" alt="messageforward.png"></p>
+<p><img src="https://github.com/MaricleZhang/reasource/blob/master/message_forward.png?raw=true" srcset="/img/loading.gif" alt="messageforward.png"></p>
 <h3 id="动态特性：方法解析和消息转发"><a href="#动态特性：方法解析和消息转发" class="headerlink" title="动态特性：方法解析和消息转发"></a>动态特性：方法解析和消息转发</h3><h4 id="动态方法解析阶段"><a href="#动态方法解析阶段" class="headerlink" title="动态方法解析阶段"></a>动态方法解析阶段</h4><p>在该阶段中，可以动态的为类添加一个方法，从而让动态添加的方法来处理之前未能处理的消息。可重写类以下方法：</p>
 <pre><code class="hljs css">+ (<span class="hljs-selector-tag">BOOL</span>)<span class="hljs-selector-tag">resolveInstanceMethod</span><span class="hljs-selector-pseudo">:(SEL)sel</span></code></pre>
 <p>如果是类的静态方法，可重写以下方法：</p>
