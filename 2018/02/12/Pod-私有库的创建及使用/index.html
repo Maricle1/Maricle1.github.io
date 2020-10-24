@@ -222,7 +222,7 @@
             <div class="markdown-body" id="post-body">
               <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>CocoaPods是iOS项目的依赖管理工具，使用它可以方便的管理和更新项目中所使用到的第三方库，我们一般用的是公有库，代码存放在Github上。个人或公司在开发过程中，会积累很多可以复用的代码包，有些我们不想开源，又想像开源库一样在CocoaPods中管理它们，那么通过私有库来管理就很必要。</p>
 <a id="more"></a>
-<h2 id="原理"><a href="#原理" class="headerlink" title="原理"></a>原理</h2><p>在创建私有库之前，我们有必要理解私有库的原理，<br><img src="http://upload-images.jianshu.io/upload_images/2403444-9206906d9b8dc9d7.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" srcset="/img/loading.gif" alt="podfile、索引库和代码库关系图.png"></p>
+<h2 id="原理"><a href="#原理" class="headerlink" title="原理"></a>原理</h2><p>在创建私有库之前，我们有必要理解私有库的原理，<br><img src="https://github.com/MaricleZhang/reasource/blob/master/pod_spec_icon.png?raw=true" srcset="/img/loading.gif" alt="podfile、索引库和代码库关系图.png"></p>
 <p>Podfile:工程的依赖描述文件。<br>Spec:  该仓库存放索引描述文件.podspec，CocoaPods通过该文件对你真正存储代码工程的 Git 仓库进行索引与下载,下面会有对podspec的详细介绍。通过spec库来控制pod私有库的版本。</p>
 <p>Lib : 你上传到远程Git仓库的代码工程，将来用于开源共享或则私有</p>
 <p>CocoaPods 根据podfile中的库的名称，通过spec索引库，来找到真正的代码库。这里有同学可能要问为什么需要两个仓库呢，我的理解是为了快速检索和版本控制。如果没有spec索引库，我们每次pod update的时候都需要在GitHub所有的代码库中检索。显然效率很低。</p>
@@ -330,7 +330,7 @@ Pod::Spec.new <span class="hljs-keyword">do</span> <span class="hljs-params">|s|
 <pre><code class="hljs angelscript"> -&gt; ZJMaricle (<span class="hljs-number">0.1</span><span class="hljs-number">.0</span>)
 
 ZJMaricle passed validation.</code></pre>
-<p>提交代码，我这里使用的<code>sourcetree</code>,本地代码库与远程库建立连接，这里就不在赘述了。并且给远程仓库打上tag，需要注意的是这里的tag就是创建私有库的版本号，需与 <code>.podspec</code>文件中的版本号保持一致。重要的事情说三遍：本地校验成功后在打tag，本地校验成功后在打tag，本地校验成功后在打tag。<br><img src="http://upload-images.jianshu.io/upload_images/2403444-e403c2147ebdea0f.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" srcset="/img/loading.gif" alt="给GitHub仓库打上tag.png"></p>
+<p>提交代码，我这里使用的<code>sourcetree</code>,本地代码库与远程库建立连接，这里就不在赘述了。并且给远程仓库打上tag，需要注意的是这里的tag就是创建私有库的版本号，需与 <code>.podspec</code>文件中的版本号保持一致。重要的事情说三遍：本地校验成功后在打tag，本地校验成功后在打tag，本地校验成功后在打tag。<br><img src="https://github.com/MaricleZhang/reasource/blob/master/source_tree_tag.png?raw=true" srcset="/img/loading.gif" alt="给GitHub仓库打上tag.png"></p>
 <h3 id="向私有的Spec-Repo中提交podspec"><a href="#向私有的Spec-Repo中提交podspec" class="headerlink" title="向私有的Spec Repo中提交podspec"></a>向私有的Spec Repo中提交podspec</h3><p>确认本地校验成功，并且打上tag后，终端进入到<code>ZJMaricle.podspec</code>同一目录下执行</p>
 <pre><code class="hljs avrasm">$ pod repo <span class="hljs-keyword">push</span> ZJMaricleSpec ZJMaricle.podspec  <span class="hljs-meta">#前面是本地Repo名字 后面是podspec名字</span></code></pre>
 <p>出现</p>
