@@ -177,7 +177,7 @@
     
     <span class="post-meta mr-2">
       <i class="iconfont icon-chart"></i>
-      643 字
+      717 字
     </span>
   
 
@@ -187,7 +187,7 @@
       <i class="iconfont icon-clock-fill"></i>
       
       
-      9
+      10
        分钟
     </span>
   
@@ -307,12 +307,11 @@ platform <span class="hljs-symbol">:ios</span> <span class="hljs-keyword">do</sp
   <span class="hljs-keyword">end</span>
 <span class="hljs-keyword">end</span></code></pre>
 
+<h2 id="常见问题"><a href="#常见问题" class="headerlink" title="常见问题"></a>常见问题</h2><h3 id="出现-fastlane-command-not-found"><a href="#出现-fastlane-command-not-found" class="headerlink" title="出现 fastlane: command not found"></a>出现 fastlane: command not found</h3><p>这个情况一般是由于 jenkins 没有设置正确的 PATH，在命令行输入</p>
+<pre><code class="hljs bash"><span class="hljs-built_in">echo</span> <span class="hljs-variable">$PATH</span></code></pre>
 
-
-
-
-
-
+<p>Manage Jenkins -&gt; Configure System 选中Environment variables 在 key 中填写 PATH，在 value 中填写第一步中输出的结果 保存即可。如下图所示</p>
+<p><img src="https://github.com/MaricleZhang/reasource/blob/master/gobal_path.png?raw=true" srcset="/img/loading.gif" alt="gobal_path"></p>
 
             </div>
             <hr>
