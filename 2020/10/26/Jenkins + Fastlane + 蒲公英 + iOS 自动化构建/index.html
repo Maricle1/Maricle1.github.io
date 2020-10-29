@@ -177,7 +177,7 @@
     
     <span class="post-meta mr-2">
       <i class="iconfont icon-chart"></i>
-      1.1k 字
+      1.4k 字
     </span>
   
 
@@ -187,7 +187,7 @@
       <i class="iconfont icon-clock-fill"></i>
       
       
-      15
+      19
        分钟
     </span>
   
@@ -224,7 +224,7 @@
 <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>由于在项目的测试阶段，为了快速的测试需要频繁的打包发布，会耗费很多的时间。而且需要自己手动去配置很多证书和环境，在每次等待都备受煎熬，为了从这种折磨中脱离而出，便考虑使用持续化集成来进行自动打包。</p>
 <p>持续集成是一种软件开发实践，即团队开发成员经常集成他们的工作，通常每个成员每天至少集成一次，也就意味着每天可能会发生多次集成。每次集成都通过自动化的构建（包括编译，发布，自动化测试）来验证，从而尽早地发现集成错误。</p>
 <p>目前比较流行的自动化流程工具是Fastlane，Fastlane是用Ruby语言编写的一套自动化工具集和框架，每一个工具实际都对应一个Ruby脚本，用来执行某一个特定的任务，而Fastlane核心框架则允许使用者通过类似配置文件的形式，将不同的工具有机而灵活的结合在一起，从而形成一个个完整的自动化流程。到目前为止，Fastlane的工具集基本上涵盖了打包，签名，测试，部署，发布，库管理等等移动开发中涉及到的内容。</p>
-<h2 id="jenkins"><a href="#jenkins" class="headerlink" title="jenkins"></a>jenkins</h2><h3 id="jenkins安装"><a href="#jenkins安装" class="headerlink" title="jenkins安装"></a>jenkins安装</h3><pre><code class="hljs mipsasm"><span class="hljs-keyword">brew </span><span class="hljs-keyword">install </span><span class="hljs-keyword">jenkins</span></code></pre>
+<h2 id="Jenkins"><a href="#Jenkins" class="headerlink" title="Jenkins"></a>Jenkins</h2><h3 id="Jenkins安装"><a href="#Jenkins安装" class="headerlink" title="Jenkins安装"></a>Jenkins安装</h3><pre><code class="hljs mipsasm"><span class="hljs-keyword">brew </span><span class="hljs-keyword">install </span><span class="hljs-keyword">jenkins</span></code></pre>
 
 <h3 id="Jenkins-常用命令"><a href="#Jenkins-常用命令" class="headerlink" title="Jenkins 常用命令"></a>Jenkins 常用命令</h3><pre><code class="hljs mipsasm"><span class="hljs-comment">#启动jenkins</span>
 <span class="hljs-keyword">brew </span>services start <span class="hljs-keyword">jenkins</span>
@@ -315,6 +315,39 @@ platform <span class="hljs-symbol">:ios</span> <span class="hljs-keyword">do</sp
 <pre><code class="hljs avrasm"><span class="hljs-symbol">download_URL:</span>(.*)</code></pre>
 <p>如下图说明配置成功</p>
 <p><img src="https://github.com/MaricleZhang/reasource/blob/master/building_after_show_qr_code.png?raw=true" srcset="/img/loading.gif" alt="building_after_show_qr_code"></p>
+<h3 id="发送到钉钉群"><a href="#发送到钉钉群" class="headerlink" title="发送到钉钉群"></a>发送到钉钉群</h3><p>Manage Jenkins -&gt; Plugin Manager 安装dingtalk插件</p>
+<pre><code class="hljs bash"><span class="hljs-keyword">if</span> [[ <span class="hljs-variable">$dingtalk</span> == <span class="hljs-literal">true</span> ]]; <span class="hljs-keyword">then</span>
+  <span class="hljs-built_in">echo</span> <span class="hljs-string">&quot;=======================发送钉钉消息============================&quot;</span>
+  
+  CHANGE_LOG=<span class="hljs-string">&#x27;&#x27;</span>
+  <span class="hljs-keyword">if</span> [[ <span class="hljs-variable">$gitlog</span> == <span class="hljs-literal">true</span> ]]; <span class="hljs-keyword">then</span>
+     CHANGE_LOG=`git <span class="hljs-built_in">log</span> --pretty=format:<span class="hljs-string">&quot;\n - %h - %an, %ar : %s&quot;</span> -5`
+  <span class="hljs-keyword">fi</span>
+  
+  <span class="hljs-keyword">if</span> [ -z <span class="hljs-variable">$&#123;dingtalktoken&#125;</span> ]; <span class="hljs-keyword">then</span>
+ 	dingtalktoken=<span class="hljs-string">&#x27;b648f77cef19500e89b8168530ab00f160dc5c2fb41b41cd19da50420fc6e7cd&#x27;</span>
+  <span class="hljs-keyword">fi</span>
+
+  POD_LOG=<span class="hljs-string">&#x27;&#x27;</span>
+  <span class="hljs-comment">#POD_LOG=$(cat commit_log.txt)</span>
+  
+
+  data=<span class="hljs-string">&#x27;&#123;</span>
+<span class="hljs-string">    &quot;msgtype&quot;: &quot;markdown&quot;,</span>
+<span class="hljs-string">    &quot;markdown&quot;: &#123;</span>
+<span class="hljs-string">        &quot;title&quot;: &quot;&#x27;</span><span class="hljs-variable">$&#123;JOB_NAME&#125;</span><span class="hljs-string">&#x27; iOS App下载&quot;,</span>
+<span class="hljs-string">        &quot;text&quot;: &quot;![ipa地址](&#x27;</span><span class="hljs-variable">$&#123;url&#125;</span><span class="hljs-string">&#x27;)\n ### &#x27;</span><span class="hljs-variable">$&#123;JOB_NAME&#125;</span><span class="hljs-string">&#x27;-&#x27;</span><span class="hljs-variable">$&#123;BUILD_NUMBER&#125;</span><span class="hljs-string">&#x27; \n ### &#x27;</span><span class="hljs-variable">$&#123;branch&#125;</span>分支<span class="hljs-string">&#x27; \n\n &#x27;</span>-------------<span class="hljs-string">&#x27; \n ### &#x27;</span>备注：<span class="hljs-string">&#x27;\n &#x27;</span><span class="hljs-variable">$&#123;marker&#125;</span><span class="hljs-string">&#x27; \n &#x27;</span>-------------<span class="hljs-string">&#x27; \n ### &#x27;</span>主工程修改日志：<span class="hljs-string">&#x27; \n &#x27;</span><span class="hljs-variable">$&#123;CHANGE_LOG&#125;</span><span class="hljs-string">&#x27; \n &#x27;</span>-------------<span class="hljs-string">&#x27; \n &quot;</span>
+<span class="hljs-string">    &#125;,</span>
+<span class="hljs-string">  &#125;&#x27;</span>
+  
+    curl <span class="hljs-string">&quot;https://oapi.dingtalk.com/robot/send?access_token=<span class="hljs-variable">$&#123;dingtalktoken&#125;</span>&quot;</span> -H <span class="hljs-string">&quot;Content-Type: application/json&quot;</span> -d <span class="hljs-string">&#x27;&#x27;</span><span class="hljs-string">&quot;<span class="hljs-variable">$&#123;data&#125;</span>&quot;</span><span class="hljs-string">&#x27;&#x27;</span>
+    <span class="hljs-keyword">if</span> [[ <span class="hljs-variable">$stable</span> == <span class="hljs-literal">true</span> ]]; <span class="hljs-keyword">then</span>
+      curl <span class="hljs-string">&quot;https://oapi.dingtalk.com/robot/send?access_token=2f61c981f16837bfcdd9883d7bed5106df8c30a08fbf2f86f6e560a45b1d45ad&quot;</span> -H <span class="hljs-string">&quot;Content-Type: application/json&quot;</span> -d <span class="hljs-string">&#x27;&#x27;</span><span class="hljs-string">&quot;<span class="hljs-variable">$&#123;data&#125;</span>&quot;</span><span class="hljs-string">&#x27;&#x27;</span>
+    <span class="hljs-keyword">fi</span>
+
+<span class="hljs-keyword">fi</span></code></pre>
+
+
 <h2 id="常见问题"><a href="#常见问题" class="headerlink" title="常见问题"></a>常见问题</h2><h3 id="出现-fastlane-command-not-found"><a href="#出现-fastlane-command-not-found" class="headerlink" title="出现 fastlane: command not found"></a>出现 fastlane: command not found</h3><p>这个情况一般是由于 jenkins 没有设置正确的 PATH，在命令行输入</p>
 <pre><code class="hljs bash"><span class="hljs-built_in">echo</span> <span class="hljs-variable">$PATH</span></code></pre>
 
