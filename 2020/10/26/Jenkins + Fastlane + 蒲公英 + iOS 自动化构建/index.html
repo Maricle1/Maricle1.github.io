@@ -316,36 +316,36 @@ platform <span class="hljs-symbol">:ios</span> <span class="hljs-keyword">do</sp
 <p>如下图说明配置成功</p>
 <p><img src="https://github.com/MaricleZhang/reasource/blob/master/building_after_show_qr_code.png?raw=true" srcset="/img/loading.gif" alt="building_after_show_qr_code"></p>
 <h3 id="发送到钉钉群"><a href="#发送到钉钉群" class="headerlink" title="发送到钉钉群"></a>发送到钉钉群</h3><p>Manage Jenkins -&gt; Plugin Manager 安装dingtalk插件,详情请参考<a target="_blank" rel="noopener" href="https://jenkinsci.github.io/dingtalk-plugin/">jenkins钉钉插件</a></p>
-<pre><code class="hljs bash"><span class="hljs-keyword">if</span> [[ <span class="hljs-variable">$dingtalk</span> == <span class="hljs-literal">true</span> ]]; <span class="hljs-keyword">then</span>
-  <span class="hljs-built_in">echo</span> <span class="hljs-string">&quot;=======================发送钉钉消息============================&quot;</span>
+<pre><code class="hljs nginx">if [[ $dingtalk == true ]]; then
+  <span class="hljs-attribute">echo</span> <span class="hljs-string">&quot;=======================发送钉钉消息============================&quot;</span>
   
   CHANGE_LOG=<span class="hljs-string">&#x27;&#x27;</span>
-  <span class="hljs-keyword">if</span> [[ <span class="hljs-variable">$gitlog</span> == <span class="hljs-literal">true</span> ]]; <span class="hljs-keyword">then</span>
-     CHANGE_LOG=`git <span class="hljs-built_in">log</span> --pretty=format:<span class="hljs-string">&quot;\n - %h - %an, %ar : %s&quot;</span> -5`
-  <span class="hljs-keyword">fi</span>
+  if [[ $gitlog == true ]]; then
+     CHANGE_LOG=`git log --pretty=format:&quot;\n - %h - %an, %ar : %s&quot; -5`
+  fi
   
-  <span class="hljs-keyword">if</span> [ -z <span class="hljs-variable">$&#123;dingtalktoken&#125;</span> ]; <span class="hljs-keyword">then</span>
- 	dingtalktoken=<span class="hljs-string">&#x27;b648f77cef19500e89b8168530ab00f160dc5c2fb41b41cd19da50420fc6e7&#x27;</span>
-  <span class="hljs-keyword">fi</span>
+  if [ -z $&#123;dingtalktoken&#125; ]; then
+ 	dingtalktoken=&#x27;钉钉access_token&#x27;
+  fi
 
-  POD_LOG=<span class="hljs-string">&#x27;&#x27;</span>
+  POD_LOG=&#x27;&#x27;
   <span class="hljs-comment">#POD_LOG=$(cat commit_log.txt)</span>
   
 
-  data=<span class="hljs-string">&#x27;&#123;</span>
-<span class="hljs-string">    &quot;msgtype&quot;: &quot;markdown&quot;,</span>
-<span class="hljs-string">    &quot;markdown&quot;: &#123;</span>
-<span class="hljs-string">        &quot;title&quot;: &quot;&#x27;</span><span class="hljs-variable">$&#123;JOB_NAME&#125;</span><span class="hljs-string">&#x27; iOS App下载&quot;,</span>
-<span class="hljs-string">        &quot;text&quot;: &quot;![ipa地址](&#x27;</span><span class="hljs-variable">$&#123;url&#125;</span><span class="hljs-string">&#x27;)\n ### &#x27;</span><span class="hljs-variable">$&#123;JOB_NAME&#125;</span><span class="hljs-string">&#x27;-&#x27;</span><span class="hljs-variable">$&#123;BUILD_NUMBER&#125;</span><span class="hljs-string">&#x27; \n ### &#x27;</span><span class="hljs-variable">$&#123;branch&#125;</span>分支<span class="hljs-string">&#x27; \n\n &#x27;</span>-------------<span class="hljs-string">&#x27; \n ### &#x27;</span>备注：<span class="hljs-string">&#x27;\n &#x27;</span><span class="hljs-variable">$&#123;marker&#125;</span><span class="hljs-string">&#x27; \n &#x27;</span>-------------<span class="hljs-string">&#x27; \n ### &#x27;</span>主工程修改日志：<span class="hljs-string">&#x27; \n &#x27;</span><span class="hljs-variable">$&#123;CHANGE_LOG&#125;</span><span class="hljs-string">&#x27; \n &#x27;</span>-------------<span class="hljs-string">&#x27; \n &quot;</span>
-<span class="hljs-string">    &#125;,</span>
-<span class="hljs-string">  &#125;&#x27;</span>
+  data=&#x27;&#123;
+    &quot;msgtype&quot;: &quot;markdown&quot;,
+    &quot;markdown&quot;: &#123;
+        &quot;title&quot;: &quot;&#x27;$&#123;JOB_NAME&#125;&#x27; iOS App下载&quot;,
+        &quot;text&quot;: &quot;![ipa地址](&#x27;$&#123;url&#125;&#x27;)\n ### &#x27;$&#123;JOB_NAME&#125;&#x27;-&#x27;$&#123;BUILD_NUMBER&#125;&#x27; \n ### &#x27;$&#123;branch&#125;分支&#x27; \n\n &#x27;-------------&#x27; \n ### &#x27;备注：&#x27;\n &#x27;$&#123;marker&#125;&#x27; \n &#x27;-------------&#x27; \n ### &#x27;主工程修改日志：&#x27; \n &#x27;$&#123;CHANGE_LOG&#125;&#x27; \n &#x27;-------------&#x27; \n &quot;
+    &#125;,
+  &#125;&#x27;
   
-    curl <span class="hljs-string">&quot;https://oapi.dingtalk.com/robot/send?access_token=<span class="hljs-variable">$&#123;dingtalktoken&#125;</span>&quot;</span> -H <span class="hljs-string">&quot;Content-Type: application/json&quot;</span> -d <span class="hljs-string">&#x27;&#x27;</span><span class="hljs-string">&quot;<span class="hljs-variable">$&#123;data&#125;</span>&quot;</span><span class="hljs-string">&#x27;&#x27;</span>
-    <span class="hljs-keyword">if</span> [[ <span class="hljs-variable">$stable</span> == <span class="hljs-literal">true</span> ]]; <span class="hljs-keyword">then</span>
-      curl <span class="hljs-string">&quot;https://oapi.dingtalk.com/robot/send?access_token=2f61c981f16837bfcdd9883d7bed5106df8c30a08fbf2f86f6e560a45b1d45&quot;</span> -H <span class="hljs-string">&quot;Content-Type: application/json&quot;</span> -d <span class="hljs-string">&#x27;&#x27;</span><span class="hljs-string">&quot;<span class="hljs-variable">$&#123;data&#125;</span>&quot;</span><span class="hljs-string">&#x27;&#x27;</span>
-    <span class="hljs-keyword">fi</span>
-
-<span class="hljs-keyword">fi</span></code></pre>
+    <span class="hljs-attribute">curl</span> <span class="hljs-string">&quot;https://oapi.dingtalk.com/robot/send?access_token=<span class="hljs-variable">$&#123;dingtalktoken&#125;</span>&quot;</span> -H <span class="hljs-string">&quot;Content-Type: application/json&quot;</span> -d <span class="hljs-string">&#x27;&#x27;</span><span class="hljs-string">&quot;<span class="hljs-variable">$&#123;data&#125;</span>&quot;</span><span class="hljs-string">&#x27;&#x27;</span>
+    if [[ $stable == true ]]; then
+      <span class="hljs-attribute">curl</span> <span class="hljs-string">&quot;https://oapi.dingtalk.com/robot/send?access_token=&quot;</span>钉钉access_token<span class="hljs-string">&quot; -H &quot;</span>Content-Type: application/json<span class="hljs-string">&quot; -d &#x27;&#x27;&quot;</span><span class="hljs-variable">$&#123;data&#125;</span><span class="hljs-string">&quot;&#x27;&#x27;</span>
+<span class="hljs-string">    fi</span>
+<span class="hljs-string"></span>
+<span class="hljs-string">fi</span></code></pre>
 
 
 <h2 id="常见问题"><a href="#常见问题" class="headerlink" title="常见问题"></a>常见问题</h2><h3 id="出现-fastlane-command-not-found"><a href="#出现-fastlane-command-not-found" class="headerlink" title="出现 fastlane: command not found"></a>出现 fastlane: command not found</h3><p>这个情况一般是由于 jenkins 没有设置正确的 PATH，在命令行输入</p>
