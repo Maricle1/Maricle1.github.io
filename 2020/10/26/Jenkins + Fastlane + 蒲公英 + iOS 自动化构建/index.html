@@ -315,7 +315,7 @@ platform <span class="hljs-symbol">:ios</span> <span class="hljs-keyword">do</sp
 <pre><code class="hljs avrasm"><span class="hljs-symbol">download_URL:</span>(.*)</code></pre>
 <p>如下图说明配置成功</p>
 <p><img src="https://github.com/MaricleZhang/reasource/blob/master/building_after_show_qr_code.png?raw=true" srcset="/img/loading.gif" alt="building_after_show_qr_code"></p>
-<h3 id="发送到钉钉群"><a href="#发送到钉钉群" class="headerlink" title="发送到钉钉群"></a>发送到钉钉群</h3><p>Manage Jenkins -&gt; Plugin Manager 安装dingtalk插件</p>
+<h3 id="发送到钉钉群"><a href="#发送到钉钉群" class="headerlink" title="发送到钉钉群"></a>发送到钉钉群</h3><p>Manage Jenkins -&gt; Plugin Manager 安装dingtalk插件,详情请参考<a target="_blank" rel="noopener" href="https://jenkinsci.github.io/dingtalk-plugin/">jenkins钉钉插件</a></p>
 <pre><code class="hljs bash"><span class="hljs-keyword">if</span> [[ <span class="hljs-variable">$dingtalk</span> == <span class="hljs-literal">true</span> ]]; <span class="hljs-keyword">then</span>
   <span class="hljs-built_in">echo</span> <span class="hljs-string">&quot;=======================发送钉钉消息============================&quot;</span>
   
@@ -325,7 +325,7 @@ platform <span class="hljs-symbol">:ios</span> <span class="hljs-keyword">do</sp
   <span class="hljs-keyword">fi</span>
   
   <span class="hljs-keyword">if</span> [ -z <span class="hljs-variable">$&#123;dingtalktoken&#125;</span> ]; <span class="hljs-keyword">then</span>
- 	dingtalktoken=<span class="hljs-string">&#x27;b648f77cef19500e89b8168530ab00f160dc5c2fb41b41cd19da50420fc6e7cd&#x27;</span>
+ 	dingtalktoken=<span class="hljs-string">&#x27;b648f77cef19500e89b8168530ab00f160dc5c2fb41b41cd19da50420fc6e7&#x27;</span>
   <span class="hljs-keyword">fi</span>
 
   POD_LOG=<span class="hljs-string">&#x27;&#x27;</span>
@@ -342,7 +342,7 @@ platform <span class="hljs-symbol">:ios</span> <span class="hljs-keyword">do</sp
   
     curl <span class="hljs-string">&quot;https://oapi.dingtalk.com/robot/send?access_token=<span class="hljs-variable">$&#123;dingtalktoken&#125;</span>&quot;</span> -H <span class="hljs-string">&quot;Content-Type: application/json&quot;</span> -d <span class="hljs-string">&#x27;&#x27;</span><span class="hljs-string">&quot;<span class="hljs-variable">$&#123;data&#125;</span>&quot;</span><span class="hljs-string">&#x27;&#x27;</span>
     <span class="hljs-keyword">if</span> [[ <span class="hljs-variable">$stable</span> == <span class="hljs-literal">true</span> ]]; <span class="hljs-keyword">then</span>
-      curl <span class="hljs-string">&quot;https://oapi.dingtalk.com/robot/send?access_token=2f61c981f16837bfcdd9883d7bed5106df8c30a08fbf2f86f6e560a45b1d45ad&quot;</span> -H <span class="hljs-string">&quot;Content-Type: application/json&quot;</span> -d <span class="hljs-string">&#x27;&#x27;</span><span class="hljs-string">&quot;<span class="hljs-variable">$&#123;data&#125;</span>&quot;</span><span class="hljs-string">&#x27;&#x27;</span>
+      curl <span class="hljs-string">&quot;https://oapi.dingtalk.com/robot/send?access_token=2f61c981f16837bfcdd9883d7bed5106df8c30a08fbf2f86f6e560a45b1d45&quot;</span> -H <span class="hljs-string">&quot;Content-Type: application/json&quot;</span> -d <span class="hljs-string">&#x27;&#x27;</span><span class="hljs-string">&quot;<span class="hljs-variable">$&#123;data&#125;</span>&quot;</span><span class="hljs-string">&#x27;&#x27;</span>
     <span class="hljs-keyword">fi</span>
 
 <span class="hljs-keyword">fi</span></code></pre>
