@@ -177,7 +177,7 @@
     
     <span class="post-meta mr-2">
       <i class="iconfont icon-chart"></i>
-      1.4k 字
+      1.5k 字
     </span>
   
 
@@ -187,7 +187,7 @@
       <i class="iconfont icon-clock-fill"></i>
       
       
-      19
+      22
        分钟
     </span>
   
@@ -346,6 +346,13 @@ platform <span class="hljs-symbol">:ios</span> <span class="hljs-keyword">do</sp
 <span class="hljs-string">    fi</span>
 <span class="hljs-string"></span>
 <span class="hljs-string">fi</span></code></pre>
+
+<h3 id="上传到appstore"><a href="#上传到appstore" class="headerlink" title="上传到appstore"></a>上传到appstore</h3><pre><code class="hljs dsconfig"><span class="hljs-string">xcrun </span><span class="hljs-string">altool </span><span class="hljs-built_in">--upload-app</span> -f <span class="hljs-string">&#x27;/Users/yangda/.jenkins/workspace/JUApp-appstore/JUApp/build/JuApp.ipa&#x27;</span> -t <span class="hljs-string">ios </span><span class="hljs-built_in">--apiKey</span> <span class="hljs-string">&#x27;apiKey&#x27;</span> <span class="hljs-built_in">--apiIssuer</span> <span class="hljs-string">&#x27;apiIssuer&#x27;</span> <span class="hljs-built_in">--verbose</span>
+<span class="hljs-built_in"></span></code></pre>
+
+<h3 id="上传dSYM到Bugly"><a href="#上传dSYM到Bugly" class="headerlink" title="上传dSYM到Bugly"></a>上传dSYM到Bugly</h3><pre><code class="hljs stylus">cp /Users/yangda/.jenkins/workspace/JUApp-appstore/JUApp/build/JuApp<span class="hljs-selector-class">.app</span><span class="hljs-selector-class">.dSYM</span><span class="hljs-selector-class">.zip</span> /Users/yangda/dsym/JuApp-$&#123;BUILD_NUMBER&#125;<span class="hljs-selector-class">.app</span><span class="hljs-selector-class">.dSYM</span>.zip
+
+curl -k <span class="hljs-string">&quot;https://api.bugly.qq.com/openapi/file/upload/symbol?app_key=9f197add-b20b-4f37-8025-279f500a36e5&amp;app_id=6887020ef2&quot;</span> --<span class="hljs-selector-tag">form</span> <span class="hljs-string">&quot;api_version=1&quot;</span> --<span class="hljs-selector-tag">form</span> <span class="hljs-string">&quot;app_id=app_id&quot;</span> --<span class="hljs-selector-tag">form</span> <span class="hljs-string">&quot;app_key= app_key&quot;</span> --<span class="hljs-selector-tag">form</span> <span class="hljs-string">&quot;symbolType=2&quot;</span>  --<span class="hljs-selector-tag">form</span> <span class="hljs-string">&quot;bundleId=com.shanju.ju&quot;</span> --<span class="hljs-selector-tag">form</span> <span class="hljs-string">&quot;productVersion=1.0&quot;</span> --<span class="hljs-selector-tag">form</span> <span class="hljs-string">&quot;fileName=JuApp.app.dSYM.zip&quot;</span> --<span class="hljs-selector-tag">form</span> <span class="hljs-string">&quot;file=@/Users/yangda/.jenkins/workspace/JUApp-appstore/JUApp/build/JuApp.app.dSYM.zip&quot;</span> --verbose</code></pre>
 
 
 <h2 id="常见问题"><a href="#常见问题" class="headerlink" title="常见问题"></a>常见问题</h2><h3 id="出现-fastlane-command-not-found"><a href="#出现-fastlane-command-not-found" class="headerlink" title="出现 fastlane: command not found"></a>出现 fastlane: command not found</h3><p>这个情况一般是由于 jenkins 没有设置正确的 PATH，在命令行输入</p>
